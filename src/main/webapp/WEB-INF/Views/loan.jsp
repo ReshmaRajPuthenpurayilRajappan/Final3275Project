@@ -17,43 +17,14 @@
     <style>
         h1 {
             text-align: center;
-            background-color: cyan;
         }
     </style>
 </head>
 <body>
 <h1>Loan Records</h1>
 <p>The following are the loan records...</p>
-<form>
-    <div class="form-group">
-        <label for="clientno">Client Number</label>
-        <input type="text" class="form-control" id="clientno">
-    </div>
-    <div class="form-group">
-        <label for="clientname">Client Name</label>
-        <input type="password" class="form-control" id="clientname">
 
-    </div>
-    <div class="form-group">
-        <label for="loanamount">Loan Amount</label>
-        <input type="password" class="form-control" id="loanamount">
-
-    </div>
-    <div class="form-group">
-        <label for="years">Number of Years</label>
-        <input type="password" class="form-control" id="years">
-
-    </div>
-    <div class="form-group">
-        <label for="loantype">Loan Type</label>
-        <input type="password" class="form-control" id="loantype">
-
-    </div>
-
-</form>
-<a class="btn btn-success" href="add-todo">Add</a>
-<div class="container2">
-    <h2>Categories</h2>
+<div class="container1">
 
     <table class="table table-striped">
         <thead>
@@ -67,33 +38,42 @@
         </thead>
         <tbody>
 
-<%--        <c:forEach items="${todos}" var="todo">--%>
+        <c:forEach items="${todos}" var="todo">
 
 
 
-<%--            <tr>--%>
-<%--                <td>${todo.catcode}</td>--%>
-<%--                <td>${todo.catdesc}</td>--%>
+            <td>
+                <td>${todo.clientno}</td>
+                <td>${todo.clientname}</td>
+                <td>${todo.loanamount}</td>
+                <td>${todo.years}</td>
+                <td>${todo.loantype}</td>
 
-<%--                <td>    <a type="button" class="btn btn-primary"--%>
-<%--                           href="update-todo?id=${todo.catcode}" >Edit</a> </td>--%>
-
-
-
-<%--                <td>    <a type="button" class="btn btn-primary"--%>
-<%--                           href="update-todo?id=${todo.catcode}" >Delete</a> </td>--%>
+                <td>    <a type="button" class="btn btn-primary"
+                           href="update-todo?id=${todo.clientno}" >Edit</a> </td>
 
 
 
-<%--            </tr>--%>
+                <td>    <a type="button" class="btn btn-primary"
+                           href="update-todo?id=${todo.catcode}" >Delete</a> </td>
+
+                <td> </td>
+            <td>  <a type="button" class="btn btn-primary"
+                               href="" >Authorize Table</a> </td>
 
 
-<%--        </c:forEach>--%>
+
+            </tr>
+
+
+        </c:forEach>
+
         </tbody>
+
     </table>
 </div>
 
-</div>
+<a class="btn btn-success" href="add-todo">Add</a>
 
 </body>
 
