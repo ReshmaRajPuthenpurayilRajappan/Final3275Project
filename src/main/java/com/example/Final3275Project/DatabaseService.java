@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseService implements DatabaseInterface{
+public class DatabaseService implements DatabaseInterface {
 
     Connection con;
     public DatabaseService(Connection con) {
@@ -28,7 +28,8 @@ public class DatabaseService implements DatabaseInterface{
     @Override
     public Loan edit(Loan loan, String clientno) throws SQLException, ClassNotFoundException {
         PreparedStatement query;
-        query = con.prepareStatement("Update loan set clientno=?, clientname=?, loanamount=?, years=?,loantype=? where clientno = ?");
+        query = con.prepareStatement("Update loan set clientno=?, clientname=?, loanamount=?, " +
+                "years=?,loantype=? where clientno = ?");
         query.setString(1, loan.getClientno());
         query.setString(2, loan.getClientname());
         query.setDouble(3, loan.getLoanamount());
@@ -39,51 +40,43 @@ public class DatabaseService implements DatabaseInterface{
         return loan;
     }
     @Override
-    public void delete(String catcode) throws SQLException {
-        String quer1 = "Delete from Category where catcode = ?";
+    public void delete(String clientno) throws SQLException {
+        String quer1 = "Delete from loan where clientno = ?";
         PreparedStatement query = con.prepareStatement(quer1);
-        query.setString(1, catcode);
+        query.setString(1, clientno);
         query.executeUpdate();
     }
-    public Category search(String catcode) throws SQLException,ClassNotFoundException {
-        String quer1 = "Select * from category where catcode = ?";
+    public Loan search(String clientno) throws SQLException,ClassNotFoundException {
+        String quer1 = "Select * from loan where clientno = ?";
         PreparedStatement query = con.prepareStatement(quer1);
-        query.setString(1, catcode);
+        query.setString(1, clientno);
         ResultSet rs = query.executeQuery();
         if(!rs.first()){
             System.out.print("Record not existing");
             return null;
         }
-        Category obj1=null;
-        obj1 = new Category(rs.getString("catcode"), rs.getString("catdesc"));
+        Loan obj1=null;
+        obj1 = new Loan(rs.getString("clientno"), rs.getString("clientname"),
+                rs.getDouble("loanamount"), rs.getInt("years"),
+                rs.getString("loantype"));
         return obj1;
     }
     @Override
-    public List<Category> display() throws ClassNotFoundException, SQLException {
-        //create an array list that will contain the data recovered
-        List<Category> Catlist = new ArrayList<Category>();
-        String quer1 = "Select * from category";
+    public List<Loan> display() throws ClassNotFoundException, SQLException {
+
+        List<Loan> Loanlist = new ArrayList<Loan>();
+        String quer1 = "Select * from loan";
         PreparedStatement query = con.prepareStatement(quer1);
         ResultSet rs = query.executeQuery();
-        Category obj1;
+        Loan obj1;
         //display records if there is data;
         while (rs.next()) {
-            obj1 = new Category(rs.getString("catcode"), rs.getString("catdesc"));
-            Catlist.add(obj1); } return Catlist;
-    }
-    public List<Items> display2(String catcode) throws ClassNotFoundException, SQLException {
-        //create an array list that will contain the data recovered
-        List<Items> Itemlist = new ArrayList<Items>();
-        String quer1 = "Select itemcode,itemdesc from items where catcode=?";
-        PreparedStatement query = con.prepareStatement(quer1);
-        query.setString(1, catcode); ResultSet rs = query.executeQuery();
-        Items obj2;
-        //display records if there is data;
-        while (rs.next()) {
-            obj2 = new Items(rs.getString("itemcode"),rs.getString("itemdesc"));
-            Itemlist.add(obj2);
+            obj1 = new Loan(rs.getString("clientno"), rs.getString("clientname"),
+                    rs.getDouble("loanamount"), rs.getInt("years"),
+                    rs.getString("loantype"));
+            Loanlist.add(obj1);
         }
-        return Itemlist;
+        return Loanlist;
     }
 
 
